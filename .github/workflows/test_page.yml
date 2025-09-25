@@ -29,11 +29,19 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
+
+      - name: Modify index.html with deployment timestamp
+        run: |
+          # Add a timestamp to show when this deployment was made
+          sed -i 's/<p>Welcome to my simple test page<\/p>/<p>Welcome to my simple test page<\/p>\n        <p style="color: #28a745; font-size: 1rem; margin-top: 1rem;">Last deployed: '"$(date '+%Y-%m-%d %H:%M:%S UTC')"'<\/p>/' ./a/b/c/index.html
+          echo "Modified index.html content:"
+          cat ./a/b/c/index.html
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
-          path: './a/b/c'
+          path: "./a/b/c"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
