@@ -1,0 +1,19 @@
+name: "Test Tag Ref"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-tag:
+    name: Echo Tag Ref
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        # No need to specify 'ref:' — it auto-checks out the ref you selected in UI
+
+      - name: Echo tag ref
+        run: |
+          echo "GITHUB_REF = $GITHUB_REF"
+          echo "GITHUB_REF_NAME = $GITHUB_REF_NAME"
+          echo "Current git tag (if any): $(git describe --tags --exact-match 2>/dev/null || echo 'Not a tag commit')"
